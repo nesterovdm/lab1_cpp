@@ -1,6 +1,7 @@
 #include "Task1.h"
 #include "Task2.h"
 #include "Task3.h"
+#include "Task4.h"
 
 int main () {
   int task_number = 0;
@@ -61,7 +62,8 @@ int main () {
     std::cin >> first_number;
     std::cout << "Введите второе целое число: ";
     std::cin >> second_number;
-    std::cout << "Сумма цифр из разряда единиц: " << lastNumSum(first_number, second_number);
+    std::cout << "Сумма цифр из разряда единиц: ";
+    std::cout << lastNumSum(first_number, second_number);
     break;
   }
 
@@ -83,7 +85,8 @@ int main () {
     std::cin >> first_number;
     std::cout << "Введите второе целое число: ";
     std::cin >> second_number;
-    std::cout << "Результат сравнения: " << makeDecision(first_number, second_number);
+    std::cout << "Результат сравнения: ";
+    std::cout << makeDecision(first_number, second_number);
     break;
   }
 
@@ -111,6 +114,7 @@ int main () {
     std::cin >> input_age;
     if (input_age < 0) {
       std::cout << "Введено некорректное число";
+      break;
     }
     std::cout << "Введёный возраст: " << age(input_age);
     break;
@@ -145,7 +149,8 @@ int main () {
     std::cin >> first_number;
     std::cout << "Введите второе целое число Y: ";
     std::cin >> second_number;
-    std::cout << "Результат возведения числа X в степень Y: " << pow(first_number, second_number);
+    std::cout << "Результат возведения числа X в степень Y: ";
+    std::cout << pow(first_number, second_number);
     break;
   }
 
@@ -176,6 +181,127 @@ int main () {
 
   case 15: {
     guessGame();
+    break;
+  }
+
+  case 16: {
+    int size_array = 0;
+    int find_value = 0;
+    std::cout << "Введите размер массива (>= 1): ";
+    std::cin >> size_array;
+    if (size_array < 1) {
+      std::cout << "Длина массива не может быть меньше 1";
+      break;
+    }
+    int* array = new int[size_array];
+    InputArray(array, size_array);
+    std::cout << "Введите значение элемента для поиска: ";
+    std::cin >> find_value;
+    int occurrence_index = findLast(array, find_value, size_array);
+    if (occurrence_index == -1) {
+      std::cout << "Элемент не найден";
+    } else {
+      std::cout << "Последний индекс вхождения: " << occurrence_index;
+    }
+    delete[] array;
+    break;
+  }
+
+  case 17: {
+    int size_array = 0;
+    int index_new_element = 0;
+    int value_new_element = 0;
+    std::cout << "Введите размер массива: ";
+    std::cin >> size_array;
+    if (size_array < 1) {
+      std::cout << "Длина массива не может быть меньше 1";
+      break;
+    }
+    int* array = new int[size_array];
+    InputArray(array, size_array);
+    std::cout << "Введите индекс, на который нужно вставить элемент: ";
+    std::cin >> index_new_element;
+    if (index_new_element > size_array) {
+      std::cout << "Невозможно вставить элемент на данный индекс";
+      delete[] array;
+      break;
+    }
+    std::cout << "Введите значение нового элемента (является целым числом): ";
+    std::cin >> value_new_element;
+    int* new_array = add(array, value_new_element, index_new_element, size_array);
+    std::cout << "Теперь массив выглядит так: ";
+    PrintArray(new_array, size_array + 1);
+    delete[] array;
+    delete[] new_array;
+    break;
+  }
+
+  case 18: {
+    int size_array = 0;
+    std::cout << "Введите размер массива: ";
+    std::cin >> size_array;
+    if (size_array < 1) {
+      std::cout << "Длина массива не может быть меньше 1";
+      break;
+    }
+    int* array = new int[size_array];
+    InputArray(array, size_array);
+    reverse(array, size_array);
+    std::cout << "Теперь массив выглядит так: ";
+    PrintArray(array, size_array + 1);
+    delete[] array;
+    break;
+  }
+
+  case 19: {
+    int arr1_size = 0;
+    std::cout << "Введите размер массива 1: ";
+    std::cin >> arr1_size;
+    if (arr1_size < 1) {
+      std::cout << "Длина массива не может быть меньше 1";
+      break;
+    }
+    int* array_1 = new int[arr1_size];
+    InputArray(array_1, arr1_size);
+    int arr2_size = 0;
+    std::cout << "Введите размер массива 2: ";
+    std::cin >> arr2_size;
+    if (arr2_size < 1) {
+      std::cout << "Длина массива не может быть меньше 1";
+      delete[] array_1;
+      break;
+    }
+    int* array_2 = new int[arr2_size];
+    InputArray(array_2, arr2_size);
+    int* array_concat = concat(array_1, array_2, arr1_size, arr2_size);
+    std::cout << "Результат объединения массивов: ";
+    PrintArray(array_concat, arr1_size + arr2_size);
+    delete[] array_1;
+    delete[] array_2;
+    break;
+  }
+
+  case 20: {
+    int size_array = 0;
+    std::cout << "Введите размер массива: ";
+    std::cin >> size_array;
+    if (size_array < 1) {
+      std::cout << "Длина массива не может быть меньше 1";
+      break;
+    }
+    int* array = new int[size_array];
+    InputArray(array, size_array);
+    int* result_array = deleteNegative(array, size_array);
+    std::cout << "Массив без отрицательных чисел: ";
+    int count_in_result = 0;
+    for (int i = 0; i < size_array; ++i) {
+      if (array[i] >= 0) {
+        ++count_in_result;
+      }
+    }
+    PrintArray(result_array, count_in_result);
+    delete[] array;
+    delete[] result_array;
     break;
   }
   
